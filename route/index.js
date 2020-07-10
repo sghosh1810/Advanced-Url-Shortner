@@ -1,27 +1,27 @@
 //Import Libs
-const express = require('express')
-const router = express.Router()
-const monk = require('monk')
+const express = require('express');
+const router = express.Router();
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-//MongoDb connect using monk
-const db = monk(process.env.DATABASE_URI);
+// Load Url model
+const Url = require('../models/Url');;
+Url.collection.createIndex({"slug":1},{unique: true})
 
-//Fetch urls
-const urls = db.get('urls');
-
-//Creates index unique to avoid duplicates
-urls.createIndex({slug:1},{unique:true});
-
-
-router.get('/', (req,res) => {
-    res.render('index',{error:null,created:null})
+router.get('/', forwardAuthenticated,(req,res) => {
+    res.render('index',{error:null,created:null,layout:'layouts/frontend/layout'})
 })
+
+router.get('/dashboard', ensureAuthenticated, (req, res) =>
+    res.render('dashboard', {
+        user: req.user
+    })
+);
 
 router.get('/:id', async (req, res, next) => {
     const { id: slug } = req.params;
     if(slug!="url"){
         try {
-            const url = await urls.findOne({ slug });
+            const url = await Url.findOne({ slug });
             if (url) {
                 return res.redirect(url.url);
             }   
@@ -32,7 +32,6 @@ router.get('/:id', async (req, res, next) => {
     } else {
         res.redirect('/')
     }
-    
 });
 
 module.exports=router
