@@ -7,30 +7,45 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 const Url = require('../models/Url');;
 Url.collection.createIndex({"slug":1},{unique: true})
 
+
+//Redirect Public Homepage 
 router.get('/', forwardAuthenticated,(req,res) => {
     res.render('index',{error:null,created:null,layout:'layouts/frontend/layout'})
 })
 
-router.get('/dashboard', ensureAuthenticated, (req, res) =>
-    res.render('dashboard', {
-        user: req.user
-    })
-);
-
+//Redirect short url on basis of slugs
 router.get('/:id', async (req, res, next) => {
-    const { id: slug } = req.params;
-    if(slug!="url"){
-        try {
-            const url = await Url.findOne({ slug });
-            if (url) {
+    const { id: slug } = req.params
+    try {
+        const url = await Url.findOne({ slug });
+        //If url is found do the other steps
+        if (url) {
+            //If the url has a validity limit
+            if (url.validFor) {
+                //Check if url is valid on current date
+                if(((Date.now()-url.createdOn)/(1000*60*60*24))<=url.validFor){
+                    await Url.updateOne({slug:slug} ,{$set:{clickCount:url.clickCount+1}}, (err,res) => {
+                        if (err) throw err;
+                    })
+                    return res.redirect(url.url);
+                } else {
+                    //Delete the url from db if the validity is over
+                    await Url.deleteOne({_id:url.id}, (err,res) => {
+                            if(err) throw err;
+                    })
+                    res.redirect('static/404.html');
+                }
+            } else {
+                //If url.validFor is not set it is indefinately valid
+                await Url.updateOne({slug:slug} ,{$set:{clickCount:url.clickCount+1}}, (err,res) => {
+                    if (err) throw err;
+                })
                 return res.redirect(url.url);
-            }   
-            return res.status(404).redirect('static/404.html');
-        } catch (error) {
-            return res.status(404).redirect('static/404.html');
+            }
         }
-    } else {
-        res.redirect('/')
+        return res.status(404).redirect('static/404.html');
+    } catch (error) {
+        return res.status(404).redirect('static/404.html');
     }
 });
 

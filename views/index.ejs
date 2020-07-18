@@ -5,8 +5,8 @@
     </div>
   <% } %> 
   <% if (created) {  %> 
-    <div v-if="created" class="done">
-      <p class="created">Your short url is: <a :href="created"><%= created %> </a></p>
+    <div class="done">
+      <p class="created">Your short url is: <a href="<%= created %>"><%= created %> </a>
     </div>
   <% } %> 
   <input class="input" type="text" name="url" id="url" placeholder="enter a url" required>

@@ -32,9 +32,11 @@ mongoose
 
 
 //Routes Handler
-indexRouter = require('./route/index');
 urlRouter = require('./route/url');
-userRouter = require('./route/users')
+userRouter = require('./route/users');
+dashboardRouter = require('./route/dashboard');
+indexRouter = require('./route/index');
+
 
 //Middlewares
 app.use(expressLayouts);
@@ -42,10 +44,12 @@ app.set('view engine','ejs');
 app.set('layout','layouts/dashboard/layout')
 app.set('views', path.join(__dirname, 'views'));
 app.use(helmet());
-app.use(morgan('common'));
+//app.use(morgan('common'));
 app.use(bodyParser.urlencoded({limit:'10mb', extended:true}))
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/',express.static(path.join(__dirname, 'public')));
+app.use('/users',express.static(path.join(__dirname, 'public')));
+app.use('/dashboard',express.static(path.join(__dirname, 'public')));
 
 //Express session
 app.use(
@@ -73,16 +77,19 @@ app.use(function(req, res, next) {
   
 
 //Routes Handler
-app.use('/',indexRouter);
 app.use('/url',urlRouter);
 app.use('/users', userRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/',indexRouter);
+
 
 /*
 //404 redirects
 app.use((req, res, next) => {
-    res.status(404).redirect('static/404.html');
+    res.status(404).sendfile("public/static/404.html");
 });
 */
+
 //Ports for usage
 const port = process.env.PORT || 3000;
 

@@ -1,33 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link
-      rel="stylesheet"
-      href="https://bootswatch.com/4/journal/bootstrap.min.css"
-    />
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <div class="container"><%- body %></div>
 
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <title>Dashboard</title>
+  <meta content="Responsive admin theme build on top of Bootstrap 4" name="description" />
+  <meta content="Themesdesign" name="author" />
+  
+  <link rel="shortcut icon" href="dashboard/images/favicon.ico">
+  <link rel="stylesheet" href="dashboard/plugins/morris/morris.css">
+
+  <!-- DataTables -->
+  <link href="dashboard/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <link href="dashboard/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- Responsive datatable examples -->
+  <link href="dashboard/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+  <link href="dashboard/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="dashboard/css/metismenu.min.css" rel="stylesheet" type="text/css">
+  <link href="dashboard/css/icons.css" rel="stylesheet" type="text/css">
+  <link href="dashboard/css/style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+  <%- body  %> 
+  <!--Jquery js-->
+  <script src="dashboard/js/jquery.min.js"></script>
+  <script src="dashboard/js/bootstrap.bundle.min.js"></script>
+  <script src="dashboard/js/metismenu.min.js"></script>
+  <script src="dashboard/js/jquery.slimscroll.js"></script>
+  <script src="dashboard/js/waves.min.js"></script>
+
+  <!--Morris Chart-->
+  <script src="dashboard/plugins/morris/morris.min.js"></script>
+  <script src="dashboard/plugins/raphael/raphael.min.js"></script>
+
+  <script src="dashboard/pages/dashboard.init.js"></script>
+
+  <!-- App js -->
+  <script src="dashboard/js/app.js"></script>
+
+  <!-- Required datatable js -->
+  <script src="dashboard/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="dashboard/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Buttons examples -->
+  <script src="dashboard/plugins/datatables/dataTables.buttons.min.js"></script>
+  <script src="dashboard/plugins/datatables/buttons.bootstrap4.min.js"></script>
+  <script src="dashboard/plugins/datatables/jszip.min.js"></script>
+  <script src="dashboard/plugins/datatables/pdfmake.min.js"></script>
+  <script src="dashboard/plugins/datatables/vfs_fonts.js"></script>
+  <script src="dashboard/plugins/datatables/buttons.html5.min.js"></script>
+  <script src="dashboard/plugins/datatables/buttons.print.min.js"></script>
+  <script src="dashboard/plugins/datatables/buttons.colVis.min.js"></script>
+  
+  <!-- Responsive examples -->
+  <script src="dashboard/plugins/datatables/dataTables.responsive.min.js"></script>
+  <script src="dashboard/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+  <!-- Datatable init js -->
+  <script src="dashboard/pages/datatables.init.js"></script>   
+</body>

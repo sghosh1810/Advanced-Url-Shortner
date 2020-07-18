@@ -1,34 +1,46 @@
-<div class="row mt-5">
-  <div class="col-md-6 m-auto">
-    <div class="card card-body">
-      <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
-      <%- include ("./partials/messages") %>
-      <form action="/users/login" method="POST">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            class="form-control"
-            placeholder="Enter Email"
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            placeholder="Enter Password"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-      </form>
-      <p class="lead mt-4">
-        No Account? <a href="/users/register">Register</a>
-      </p>
+    <!-- Begin page -->
+    <div class="accountbg"></div>
+    <div class="home-btn d-none d-sm-block">
+        <a href="/" class="text-white"><i class="fas fa-home h2"></i></a>
     </div>
-  </div>
-</div>
+    <div class="wrapper-page">
+    <div class="card card-pages shadow-none">
+        <div class="card-body">
+            <h5 class="font-18 text-center">Sign in to hyp.de</h5>
+
+            <%- include ("partials/messages") %> 
+
+            <form class="form-horizontal m-t-30" method="POST" action="/users/login">
+
+                <div class="form-group">
+                    <div class="col-12">
+                            <label>Email</label>
+                        <input class="form-control" type="text" required placeholder="Enter Email" name="email" id="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-12">
+                            <label>Password</label>
+                        <input class="form-control" type="password" required placeholder="Enter Password" id="password" name="password">
+                    </div>
+                </div>
+
+                <div class="form-group text-center m-t-20">
+                    <div class="col-12">
+                        <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" type="submit">Log In</button>
+                    </div>
+                </div>
+
+                <div class="form-group row m-t-30 m-b-0">
+                    <div class="col-sm-7">
+                        <a href="pages-recoverpw.html" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
+                    </div>
+                    <div class="col-sm-5 text-right">
+                        <a href="/users/register" class="text-muted">Create an account</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>

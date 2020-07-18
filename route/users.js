@@ -9,6 +9,9 @@ User.collection.createIndex({"email":1},{unique: true})
 
 const { forwardAuthenticated } = require('../config/auth');
 
+//Default index page for user
+router.get('/',(req,res) => { res.redirect('login')});
+
 // Login Page
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 
