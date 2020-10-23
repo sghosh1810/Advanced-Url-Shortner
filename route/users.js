@@ -4,8 +4,11 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 // Load User model
-const User = require('../models/User');;
-User.collection.createIndex({"email":1},{unique: true})
+const User = require('../models/User');
+User.collection.createIndex({"email":1},{unique: true});
+
+//Load Notification Model
+const Notification = require('../models/Notification');
 
 const { forwardAuthenticated } = require('../config/auth');
 
@@ -83,13 +86,26 @@ router.post('/register', (req, res) => {
 });
 
 // Login
-router.post('/login', (req, res, next) => {
+router.post('/login',
   passport.authenticate('local', {
-    successRedirect: '/dashboard',
     failureRedirect: '/users/login',
     failureFlash: true
-  })(req, res, next);
-});
+  }),async (req, res) => {
+    try {
+      const newNotification = new Notification({
+        messageType:"loginSuccess",
+        message:"Successfully logged in from "+req.ip.toString()+" using agent"+req.headers['user-agent'],
+        userid:req.user.id,
+      });
+      await newNotification.save();
+      res.redirect('/dashboard',);
+    } catch(err) {
+      console.log(err);
+      
+    }
+
+  }
+);
 
 // Logout
 router.get('/logout', (req, res) => {

@@ -163,73 +163,35 @@
                                 <p class="sub-title">Shorten your <code
                                         class="highlighter-rouge">long url</code> with one click</code>.</p>
                                 
-                                <!-- start form -->
-                                <form action="/dashboard" method="post">
-                                    <!--Start Message Display-->
-                                    <% if(created) { %> 
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            Your short url is <a href="<%= created %>" class="alert-link"><%= created %> </a>.
-                                        </div>
-                                    <% } %>
-                                    <% if(error) { %>
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            <%= error %> 
-                                        </div>
-                                    <% } %>
-                                    <!--End Message Display-->
-                                    <div class="form-group row">
-                                        <label for="url" class="col-sm-2 col-form-label">Long Url</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" name="url" id="url" placeholder="Enter long url" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-sm-2 col-form-label">Slug</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" name="slug" id="slug" placeholder="Enter slug">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-sm-2 col-form-label">Valid Till</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" name="validFor" id="validFor" placeholder="No of days url will be valid">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="hidden" name="userid" id="userid" value="<%= user.id %>">
-                                        </div>
-                                    </div>
-                                    <button type="submit" value="submit" class="btn btn-primary waves-effect waves-light">Shorten!</button>
-                                </form><!-- end form-->
+                                <figure>
+                                    <div id="world-map-gdp" style="width: auto; height: 500px;"></div>
+                                    <script>
+                                        //@code_start
+                                        var gdpData = <%- JSON.stringify(gdpData) %>;
+                                        $(function(){
+                                        $('#world-map-gdp').vectorMap({
+                                            map: 'world_mill',
+                                            series: {
+                                            regions: [{
+                                                values: gdpData,
+                                                scale: ['#C8EEFF', '#0071A4'],
+                                                normalizeFunction: 'polynomial'
+                                            }]
+                                            },
+                                            onRegionTipShow: function(e, el, code){
+                                            el.html(el.html()+' (GDP - '+gdpData[code]+')');
+                                            }
+                                        });
+                                        });
+                                        //@code_end
+                                    </script>
+                                </figure>
                             </div>
                         </div>
                     </div> <!-- end col -->
                 </div> <!-- end row --> 
                 
-                <div class="row"> <!-- start row -->
-                    <div class="col-12"> <!-- start col--> 
-                        <div class="card m-b-30">
-                            <h3 class="card-header ft-16 mt-0">Recent Activity</h3>
-                            <div class="card-body">
-                                <% if(notifications) { %>
-                                    <% notifications.forEach(notification => {%>
-                                        <h4 class="card-title font-16 mt-0"> <%= notification.createdOn.toString().slice(0,24).split('T')[0] %> </h4>
-                                        <p class="card-text"> <%= notification.message %> </p>
-                                    <% }) %>
-                                <% } else { %>
-                                    <p class="card-text">No logs can be found at this time!</p>
-                                <% } %> 
-                            </div>
-                        </div>
-                    </div> <!-- end col -->
-                </div> <!-- end row -->
+                
                 
             </div>
             <!-- container-fluid -->

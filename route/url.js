@@ -4,7 +4,7 @@ const yup = require('yup')
 const {nanoid} = require('nanoid');
 
 // Load Url model
-const Url = require('../models/Url');;
+const Url = require('../models/Url');
 Url.collection.createIndex({"slug":1},{unique: true})
 
 //Validate schema

@@ -63,7 +63,17 @@ const UrlSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: 0
-  }
+  },
+  /*
+  Name: clickCount
+  Usage: Keeps track of number of times short url has been used
+  Example: 10
+  */
+ visitors: {
+   type: Array,
+   required: true,
+   default:[]
+ }
 });
 
 const Url = mongoose.model('Url', UrlSchema);

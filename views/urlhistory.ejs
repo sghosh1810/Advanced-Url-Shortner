@@ -6,7 +6,7 @@
 
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="index.html" class="logo">
+            <a href="/" class="logo">
                 <span class="logo-light">
                     <i class="mdi mdi-camera-control"></i> Stexo
                 </span>
@@ -164,7 +164,24 @@
                                     You can find all <code
                                     class="highlighter-rouge">short urls </code> generated from your account here!
                                 </p>
-
+                                <!--Start Message Display-->
+                                <% if(alert) { %> 
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <%= alert %> 
+                                    </div>
+                                <% } %>
+                                <% if(error) { %>
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <%= error %> 
+                                    </div>
+                                <% } %>
+                                <!--End Message Display-->
                                 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
@@ -188,9 +205,10 @@
                                                 <td><%= url.clickCount %> </td>
                                                 <td>
                                                     <div>
-                                                        <form action="/url" method="post"></form>
-                                                            <input type="hidden" name="url" value="<%= url %> ">
-                                                            <button type="submit" value="submit" class="btn btn-primary btn-sm">Delete</a>
+                                                        <form action="/dashboard/url" method="post">
+                                                            <input type="hidden" name="slug" id="slug" value="<%=url.slug%>">
+                                                            <button type="submit" value="submit" class="btn btn-primary btn-sm">Delete</button>
+                                                        </form>        
                                                     </div>
                                                 </td>
                                             </tr>

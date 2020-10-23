@@ -74,7 +74,6 @@ app.use(function(req, res, next) {
     res.locals.error = req.flash('error');
     next();
 });
-  
 
 //Routes Handler
 app.use('/url',urlRouter);
@@ -82,13 +81,10 @@ app.use('/users', userRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/',indexRouter);
 
-
-/*
 //404 redirects
 app.use((req, res, next) => {
-    res.status(404).sendfile("public/static/404.html");
+    res.status(404).sendFile('public/static/404.html', {root: path.join(__dirname)});
 });
-*/
 
 //Ports for usage
 const port = process.env.PORT || 3000;
