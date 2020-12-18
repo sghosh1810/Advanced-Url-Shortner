@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser')
 const passport = require('passport');
 const flash = require('connect-flash');
-const session = require('express-session');
+const session = require('cookie-session');
 const mongoose = require('mongoose');
 const { compile } = require('morgan');
 
