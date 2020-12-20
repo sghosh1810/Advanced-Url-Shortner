@@ -2,14 +2,12 @@
 const path = require('path');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const morgan = require('morgan');
 const helmet = require('helmet');
 const bodyParser = require('body-parser')
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('cookie-session');
 const mongoose = require('mongoose');
-const { compile } = require('morgan');
 
 //Dev dependency
 require('dotenv').config();
@@ -44,7 +42,6 @@ app.set('view engine','ejs');
 app.set('layout','layouts/dashboard/layout')
 app.set('views', path.join(__dirname, 'views'));
 app.use(helmet());
-//app.use(morgan('common'));
 app.use(bodyParser.urlencoded({limit:'10mb', extended:true}))
 app.use(express.json());
 app.use('/',express.static(path.join(__dirname, 'public')));

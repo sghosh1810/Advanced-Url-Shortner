@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const OAuthClient = require('disco-oauth');
+
+require('dotenv').config();
+
+//Initiate Discord OAuth Client
+const Client = new OAuthClient(process.env.DISCORD_ID,process.env.DISCORD_SECRET).setScopes('identify','email').setRedirect(process.env.HOST+'/users/discordauthed');
+
+
 
 // Load User model
 const User = require('../models/User');
@@ -20,6 +28,9 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 
 // Register Page
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
+
+//Discord Public Page
+router.get('/discord', forwardAuthenticated, (req,res) => res.redirect(Client.authCodeLink));
 
 // Register
 router.post('/register', (req, res) => {
@@ -82,6 +93,41 @@ router.post('/register', (req, res) => {
         });
       }
     });
+  }
+});
+
+//Register via discord
+router.get('/discordauthed', async(req, res, next) => {
+  if (req.query.code) {
+    let userKey = await Client.getAccess(req.query.code);
+    let user = await Client.getUser(userKey);
+    const usere = await User.findOne({ email: user._emailId });
+    if(!usere){
+      const newUser = new User({name:user._username,email:user._emailId,password:''+user._id});
+      const salt = await new Promise((resolve, reject) => {
+        bcrypt.genSalt(10, function(err, salt) {
+          if (err) reject(err)
+          resolve(salt)
+        });
+      });
+      const hashedPassword = await new Promise((resolve, reject) => {
+        bcrypt.hash(newUser.password, salt, function(err, hash) {
+          if (err) reject(err)
+          resolve(hash)
+        });
+      });
+      newUser.password = hashedPassword;
+      console.log(newUser);
+      await newUser.save();
+    }
+    req.body = {email:user._emailId,password:user._id};
+    passport.authenticate('local', {
+      successRedirect: '/dashboard',
+      failureRedirect: '/users/login',
+      failureFlash: true
+    })(req,res,next);
+  } else {
+    res.redirect('/login');
   }
 });
 
