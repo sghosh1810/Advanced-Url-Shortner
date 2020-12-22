@@ -25,6 +25,15 @@ git commit -"Initial Conmmit"
 git push heroku master
 ```
 
+## ENV file/ Environment Configuration
+```
+PORT = 80
+HOST = YOUR DOMAIN URL
+DATABASE_URI = MONGODB URI
+DISCORD_ID = DISCORD APP ID
+DISCORD_SECRET = DISCORD APP SECRET
+```
+
 ## Packages
 Following dependencies are requireds to run the project.
 
