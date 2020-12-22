@@ -36,6 +36,14 @@ const UserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  /*
+  Name: isAdmin
+  Usage: Signifies if user is admin
+  */
+  isAdmin: {
+    type: Boolean,
+    default:false
   }
 });
 
