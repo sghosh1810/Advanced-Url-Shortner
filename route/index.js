@@ -54,7 +54,6 @@ router.get('/:id', async (req, res, next) => {
                 }
             } else {
                 //If url.validFor is not set it is indefinately valid
-                console.log("If not valid for");
                 await Url.updateOne({slug:slug} ,
                     {$set:{clickCount:url.clickCount+1},
                     $addToSet:{visitors:visitors}},

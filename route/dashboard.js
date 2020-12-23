@@ -4,6 +4,7 @@ const router = express.Router();
 const yup = require('yup')
 const {nanoid} = require('nanoid');
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const {createShortURL} = require('./util/util'); 
 
 // Load Url model
 const Url = require('../models/Url');const { json } = require('body-parser');
@@ -12,8 +13,6 @@ Url.collection.createIndex({"slug":1},{unique: true})
 //Load Notification Model
 const Notification = require('../models/Notification');
 
-
-Url.collection.createIndex({"slug":1},{unique: true});
 
 //Validate schema
 const urlSchema = yup.object().shape({
@@ -46,76 +45,8 @@ router.get('/', ensureAuthenticated, async(req, res) => {
 
 
 //Shorten url core logic 
-router.post('/', async(req, res, next) => {
-
-    let { slug, url, userid, validFor } = req.body;
-
-    //Store logs in session
-    const sessionNotification = req.session.notifications;
-    var notifications = "";
-    if(sessionNotification) {
-        notifications = req.session.notifications;
-    } else {
-        notifications = await Notification.find({userid:req.user.id}).sort({createdOn:-1}).limit(5);
-        req.session.notifications = notifications;
-    }
-
-    //Actual render logic
-    try {
-
-        //Stop them from using hostname!
-        if (url.includes(process.env.HOST)) {
-            throw new Error('Stop it. 🛑');
-        }
-
-        //If slug not given genrate random
-        if (!slug) {
-            slug = nanoid(7);
-        } else {
-            if(slug==="url" || slug==="dashboard" || slug==="users"){
-                throw new Error('Banned words');
-            }
-            const existing = await Url.findOne({ slug });
-            if (existing) {
-                throw new Error('Slug in use. 🍔');
-            }
-        }
-        slug = slug.toLowerCase();
-
-        //Validate slug and url format
-        await urlSchema.validate({
-            slug,
-            url
-        });
-
-        if(validFor==='') {
-            validFor=0;
-        }
-
-        const newUrl = new Url({
-            url,
-            slug,
-            userid,
-            validFor
-        });
-
-
-        const created = await newUrl.save();
-        res.render('dashboard',{
-            user:req.user,
-            error:null,
-            created:process.env.HOST+"/"+created.slug,
-            notifications: notifications
-        })
-
-    } catch (error) {
-        res.render('dashboard',{
-            user:req.user,
-            error:error.message,
-            created:null,
-            notifications: notifications
-        })
-    }
+router.post('/', async(req, res) => {
+    await createShortURL(req,res,'dash');
 });
 
 router.get('/url', ensureAuthenticated,async(req,res) => {
