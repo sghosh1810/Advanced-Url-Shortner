@@ -7,7 +7,7 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 const {createShortURL} = require('./util/util'); 
 
 // Load Url model
-const Url = require('../models/Url');const { json } = require('body-parser');
+const Url = require('../models/Url');
 Url.collection.createIndex({"slug":1},{unique: true})
 
 //Load Notification Model
@@ -60,8 +60,7 @@ router.get('/url', ensureAuthenticated,async(req,res) => {
     })
 })
 
-router.post('/url', async(req,res) => {
-    console.log(req.body);
+router.post('/url', ensureAuthenticated,async(req,res) => {
     try {
         await Url.deleteOne({slug:req.body.slug})
         const urls = await Url.find({userid:req.user.id}, (err,res) => { if(err) throw err; })

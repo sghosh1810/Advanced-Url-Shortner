@@ -12,6 +12,7 @@
   };
 
       //creates area chart
+      /*
       Dashboard.prototype.createAreaChart = function (element, pointSize, lineWidth, data, xkey, ykeys, labels, lineColors) {
           Morris.Area({
               element: element,
@@ -29,6 +30,7 @@
               behaveLikeLine: true
           });
       },
+      */
 
       //creates Donut chart
       Dashboard.prototype.createDonutChart = function (element, data, colors) {

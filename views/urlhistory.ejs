@@ -8,7 +8,7 @@
         <div class="topbar-left">
             <a href="/" class="logo">
                 <span class="logo-light">
-                    <i class="mdi mdi-camera-control"></i> Stexo
+                    <i class="mdi mdi-camera-control"></i> hyp.de
                 </span>
                 <span class="logo-sm">
                     <i class="mdi mdi-camera-control"></i>
@@ -116,10 +116,17 @@
                     </li>
                     
                     <li>
-                        <a href="/dashboard/url" class="waves-effect">
+                        <a href="#" class="waves-effect">
                             <i class="icon-accelerator"></i><span> Urls History </span>
                         </a>
                     </li>
+                    <% if (user.isAdmin) { %> 
+                        <li>
+                            <a href="/dashboard/admin" class="waves-effect">
+                                <i class="icon-accelerator"></i><span> Admin Dashboard </span>
+                            </a>
+                        </li>  
+                    <% } %>
 
                 </ul>
 
@@ -201,7 +208,7 @@
                                                 <td><a href="<%= url.url %>" target="_blank"><%= url.url %></a></td>
                                                 <td><%= url.slug %> </td>
                                                 <td><%= url.createdOn %> </td>
-                                                <td><%= url.validFor %> </td>
+                                                <td><%= url.validFor ? (url.validFor + 'Days') : 'Lifetime' %></td>
                                                 <td><%= url.clickCount %> </td>
                                                 <td>
                                                     <div>

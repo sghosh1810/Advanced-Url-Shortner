@@ -110,23 +110,25 @@
                 <ul class="metismenu" id="side-menu">
                     <li class="menu-title">Menu</li>
                     <li>
-                        <a href="#" class="waves-effect">
-                            <i class="icon-accelerator"></i><span> Dashboard </span>
+                        <a href="/dashboard" class="waves-effect">
+                            <i class="icon-accelerator"></i><span> Personal Dashboard </span>
                         </a>
                     </li>
-                    
                     <li>
-                        <a href="/dashboard/url" class="waves-effect">
-                            <i class="icon-accelerator"></i><span> Urls History </span>
+                        <a href="#" class="waves-effect">
+                            <i class="icon-accelerator"></i><span> Admin Dashboard </span>
                         </a>
                     </li>
-                    <% if (user.isAdmin) { %> 
-                        <li>
-                            <a href="/dashboard/admin" class="waves-effect">
-                                <i class="icon-accelerator"></i><span> Admin Dashboard </span>
-                            </a>
-                        </li>  
-                    <% } %> 
+                    <li>
+                        <a href="/dashboard/admin/alluser" class="waves-effect">
+                            <i class="icon-accelerator"></i><span> All Users </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/dashboard/admin/allurl" class="waves-effect">
+                            <i class="icon-accelerator"></i><span> All Urls </span>
+                        </a>
+                    </li>  
                 </ul>
 
             </div>
@@ -158,84 +160,78 @@
                         </div>
                     </div> <!-- end row -->
                 </div>
-                <!-- end page-title -->
-
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card m-b-30">
-                            <div class="card-body">
 
-                                <h4 class="mt-0 header-title">Url Shortner</h4>
-                                <p class="sub-title">Shorten your <code
-                                        class="highlighter-rouge">long url</code> with one click</code>.</p>
-                                
-                                <!-- start form -->
-                                <form action="/dashboard" method="post">
-                                    <!--Start Message Display-->
-                                    <% if(created) { %> 
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            Your short url is <a href="<%= created %>" class="alert-link"><%= created %> </a>.
-                                        </div>
-                                    <% } %>
-                                    <% if(error) { %>
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            <%= error %> 
-                                        </div>
-                                    <% } %>
-                                    <!--End Message Display-->
-                                    <div class="form-group row">
-                                        <label for="url" class="col-sm-2 col-form-label">Long Url</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" name="url" id="url" placeholder="Enter long url" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-sm-2 col-form-label">Slug</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" name="slug" id="slug" placeholder="Enter slug">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-sm-2 col-form-label">Valid Till</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" name="validFor" id="validFor" placeholder="No of days url will be valid">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="hidden" name="userid" id="userid" value="<%= user.id %>">
-                                        </div>
-                                    </div>
-                                    <button type="submit" value="submit" class="btn btn-primary waves-effect waves-light">Shorten!</button>
-                                </form><!-- end form-->
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-heading p-4">
+                                <div class="mini-stat-icon float-right">
+                                    <i class="mdi mdi-account-check bg-primary  text-white"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-16">Total Users</h5>
+                                </div>
+                                <h3 class="mt-4"><%= card.usercount %></h3>
+                                <div class="progress mt-4" style="height: 4px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
                             </div>
                         </div>
-                    </div> <!-- end col -->
-                </div> <!-- end row --> 
-                
-                <div class="row"> <!-- start row -->
-                    <div class="col-12"> <!-- start col--> 
-                        <div class="card m-b-30">
-                            <h3 class="card-header ft-16 mt-0">Recent Activity</h3>
-                            <div class="card-body">
-                                <% if(notifications) { %>
-                                    <% notifications.forEach(notification => {%>
-                                        <h4 class="card-title font-16 mt-0"> <%= notification.createdOn.toString().slice(0,24).split('T')[0] %> </h4>
-                                        <p class="card-text"> <%= notification.message %> </p>
-                                    <% }) %>
-                                <% } else { %>
-                                    <p class="card-text">No logs can be found at this time!</p>
-                                <% } %> 
+                    </div>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-heading p-4">
+                                <div class="mini-stat-icon float-right">
+                                    <i class="mdi mdi-link-variant bg-success text-white"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-16">Total Urls</h5>
+                                </div>
+                                <h3 class="mt-4"><%= card.urlcount %></h3>
+                                <div class="progress mt-4" style="height: 4px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 88%" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
                             </div>
                         </div>
-                    </div> <!-- end col -->
-                </div> <!-- end row -->
+                    </div>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-heading p-4">
+                                <div class="mini-stat-icon float-right">
+                                    <i class="mdi mdi-plus-one bg-warning text-white"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-16">Total Clicks</h5>
+                                </div>
+                                <h3 class="mt-4"><%= card.clickcount %></h3>
+                                <div class="progress mt-4" style="height: 4px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-heading p-4">
+                                <div class="mini-stat-icon float-right">
+                                    <i class="mdi mdi-refresh bg-danger text-white"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-16">Last Refreshed</h5>
+                                </div>
+                                <h3 class="mt-4"><%= card.lastrefresh %></h3>
+                                <div class="progress mt-4" style="height: 4px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end page-title -->
                 
             </div>
             <!-- container-fluid -->

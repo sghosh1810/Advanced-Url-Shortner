@@ -34,7 +34,7 @@ urlRouter = require('./route/url');
 userRouter = require('./route/users');
 dashboardRouter = require('./route/dashboard');
 indexRouter = require('./route/index');
-
+adminRouter = require('./route/admin');
 
 //Middlewares
 app.use(expressLayouts);
@@ -47,6 +47,7 @@ app.use(express.json());
 app.use('/',express.static(path.join(__dirname, 'public')));
 app.use('/users',express.static(path.join(__dirname, 'public')));
 app.use('/dashboard',express.static(path.join(__dirname, 'public')));
+app.use('/dashboard/admin',express.static(path.join(__dirname, 'public')));
 
 //Express session
 app.use(
@@ -76,6 +77,7 @@ app.use(function(req, res, next) {
 app.use('/url',urlRouter);
 app.use('/users', userRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/dashboard/admin',adminRouter);
 app.use('/',indexRouter);
 
 //404 redirects
