@@ -43,7 +43,6 @@ app.set('layout','layouts/dashboard/layout')
 app.set('views', path.join(__dirname, 'views'));
 app.use(helmet());
 app.use(bodyParser.urlencoded({limit:'10mb', extended:true}))
-app.use(express.json());
 app.use('/',express.static(path.join(__dirname, 'public')));
 app.use('/users',express.static(path.join(__dirname, 'public')));
 app.use('/dashboard',express.static(path.join(__dirname, 'public')));
